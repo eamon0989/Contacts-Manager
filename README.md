@@ -1,3 +1,3 @@
 # Contacts-Manager
 
-Project create for Launch School.
+Project created for Launch School.
