@@ -15,7 +15,10 @@ class UI {
     this.addContactButtons = document.querySelectorAll("[data-role='add-contact']"),
     this.createFormReset = document.querySelector('#create-form [type="reset"]'),
     this.cancelEditContactBtn = document.getElementById('cancel-edit-contact'),
-    this.editForm = document.getElementById('edit-form')
+    this.editForm = document.getElementById('edit-form'),
+    this.contactsTemplate = document.getElementById('contacts-template'),
+    this.tagPartial = document.getElementById('tags-partial'),
+    this.contactsListUL = document.getElementById('contacts-list');
   }
 
   addEventListeners() {
@@ -160,6 +163,27 @@ class UI {
     }
   
     return json;
+  }
+
+  createContactCard(contacts) {
+    if (!Array.isArray(contacts)) {
+      contacts = [contacts];
+    }
+
+    let handlebarsTemplate = Handlebars.compile(this.contactsTemplate.innerHTML);
+    Handlebars.registerPartial("tagsPartial", this.tagPartial.innerHTML);
+  
+    let newContacts = contacts.map(contact => {
+      let tagsArray;
+      if (contact.tags && typeof contact.tags === 'string') {
+        tagsArray = contact.tags.split(',');
+        contact.tags = tagsArray;
+      }
+       
+      return contact;
+    })
+  
+    this.contactsListUL.innerHTML = handlebarsTemplate({ contacts: newContacts});
   }
 }
 
