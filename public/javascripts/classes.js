@@ -301,7 +301,7 @@ class ContactsList {
 
 export let contactsList = new ContactsList();
 export let tagList = new TagList();
-export let tagLinks;
+// export let ui = new UI();
 
 function createContactCard(contact) {
   let ul = document.getElementById('contacts-list');
@@ -370,7 +370,7 @@ function createContactCard(contact) {
   div3.appendChild(editA);
   div3.appendChild(deleteA);
   div3.classList.add('buttons-div');
-  tagLinks = document.querySelectorAll('tag-links');
+  // tagLinks = document.querySelectorAll('tag-links');
 }
 
 function showContactsDiv() {
