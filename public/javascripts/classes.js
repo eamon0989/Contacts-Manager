@@ -1,3 +1,4 @@
+import { ui } from '/javascripts/ui.js';
 
 class Contact {
   constructor({ id, full_name, email, phone_number, tags }) {
@@ -128,7 +129,8 @@ class ContactsList {
       if (res.status === 204) {
         this.contacts.splice(index, 1);
         tagList.removeFromContactsWithTag(id);
-        e.target.parentElement.parentElement.parentElement.remove();
+        let li = e.target.closest('.contacts-list-items');
+        li.remove();
 
         if (this.contactsListEmpty()) {
           document.getElementById('display-contacts').style.display = 'none';
@@ -178,7 +180,7 @@ class ContactsList {
     let contact = new Contact(contactObject);
     this.contacts.push(contact);
     this.getTags(contact);
-    this.displayNewContact();
+    this.displayContacts();
   }
 
   getTags(contact) {
@@ -210,17 +212,13 @@ class ContactsList {
        contacts.forEach(async contact => {
         this.createContact(contact);
       })
+
+      ui.createContactCard(contacts);
     });
   }
 
   getContacts() {
     return this.contacts;
-  }
-
-  displayNewContact() {
-    let newContact = this.contacts[this.contacts.length - 1];
-    createContactCard(newContact);
-    showContactsDiv();
   }
 
   searchContacts(searchTerm) {
@@ -253,10 +251,7 @@ class ContactsList {
     while (ul.lastElementChild) {
       ul.removeChild(ul.lastElementChild);
     }
-
-    contacts.forEach(contact => {
-      createContactCard(contact);
-    })
+    ui.createContactCard(contacts);
 
     if (!this.contactsListEmpty()) {
       showContactsDiv();
@@ -301,77 +296,6 @@ class ContactsList {
 
 export let contactsList = new ContactsList();
 export let tagList = new TagList();
-export let tagLinks;
-
-function createContactCard(contact) {
-  let ul = document.getElementById('contacts-list');
-  let li = document.createElement('li');
-  li.classList.add('contacts-list-items')
-  ul.appendChild(li);
-  let div = document.createElement('div');
-  let h3 = document.createElement('h3');
-  h3.textContent = contact['full_name'];
-  div.appendChild(h3);
-  li.appendChild(div);
-  let div2 = document.createElement('div');
-  li.appendChild(div2);
-  let dl = document.createElement('dl');
-  div2.appendChild(dl);
-  let dt = document.createElement('dt');
-  dt.textContent = 'Phone Number:';
-  dt.classList.add('bold');
-  let dd = document.createElement('dd');
-  dd.textContent = contact.phone_number;
-  let dt2 = document.createElement('dt');
-  dt2.textContent = 'Email:';
-  dt2.classList.add('bold');
-  let dd2 = document.createElement('dd');
-  dd2.textContent = contact.email;
-
-  dl.appendChild(dt);
-  dl.appendChild(dd);
-  dl.appendChild(dt2);
-  dl.appendChild(dd2);
-
-  let div4 = document.createElement('div');
-  li.appendChild(div4);
-  let dl2 = document.createElement('dl');
-  div4.appendChild(dl2);
-
-  let tags = contact.tags;
-  if (tags) {
-
-    let dt3 = document.createElement('dt');
-    dt3.textContent = 'Tags:';
-    dt3.classList.add('bold');
-    dl2.appendChild(dt3);
-
-    tags?.split(',').forEach(tag => {
-      let a = document.createElement('a');
-      div4.classList.add('tag-links');
-      a.textContent = tag;
-      a.href = '#';
-      div4.appendChild(a);
-    })
-  }
-  
-  let div3= document.createElement('div');
-  li.appendChild(div3);
-  let editA = document.createElement('a');
-  editA.href = `/contacts/edit/${contact.id}`;
-  let editBtn = document.createElement('button'); 
-  editBtn.textContent = 'Edit';
-  editA.appendChild(editBtn);
-  let deleteA = document.createElement('a');
-  deleteA.href = `/contacts/delete/${contact.id}`;
-  let deleteBtn = document.createElement('button'); 
-  deleteBtn.textContent = 'Delete';
-  deleteA.appendChild(deleteBtn);
-  div3.appendChild(editA);
-  div3.appendChild(deleteA);
-  div3.classList.add('buttons-div');
-  tagLinks = document.querySelectorAll('tag-links');
-}
 
 function showContactsDiv() {
   document.getElementById('display-contacts').style.display = 'flex';
