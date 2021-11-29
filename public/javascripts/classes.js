@@ -125,7 +125,7 @@ class ContactsList {
 
   deleteContact(e, id) {
     let index = this.findContactIndex(id);
-    fetch (`http://localhost:3000/api/contacts/${id}`, { method: 'DELETE' })
+    fetch (`/api/contacts/${id}`, { method: 'DELETE' })
     .then(res => {
       if (res.status === 204) {
         this.contacts.splice(index, 1);
