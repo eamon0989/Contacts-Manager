@@ -5,10 +5,18 @@
   },
   {
     "tag_name": "Launch School",
-    "contactsWithTag": []
+    "contactsWithTag": [
+      1
+    ]
   },
   {
     "tag_name": "Family",
+    "contactsWithTag": [
+      2
+    ]
+  },
+  {
+    "tag_name": "Friends",
     "contactsWithTag": []
   }
 ]

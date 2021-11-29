@@ -26,6 +26,7 @@ class TagList {
       alert('Invalid tag');
     } else if (!this.tagAlreadyExists(tagName)) {
       let tag = this.createTag(tagName);
+      
       fetch('/api/tags/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, 
       body: JSON.stringify(tag) });
       alert(`${tagName} tag added!`)
