@@ -1,3 +1,3 @@
 # Contacts-Manager
 
-Project created for Launch School.
+A fullstack Contacts Manager created using JavaScript, HTML and CSS. It comes with an integrated tagging system.
